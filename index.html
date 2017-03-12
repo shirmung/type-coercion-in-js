@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>type coercion in JavaScript</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown>
+          <script type="text/template">
+            ## == ? === ???
+            ## ...#@^%
+          </script>
+        </section>
+
+        <!-- start intro -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## type coercion in JavaScript
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## type conversion in general
+
+            - aka typecasting or type coercion
+            - explicitly or implicitly changing an entity of one data type to another
+            	- ex: converting an int to a string
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## type conversion in JavaScript
+
+            - JavaScript is dynamically typed
+            - type conversion can happen in two ways:
+            	- explicitly specified in the code
+            		- ex:
+            		```js
+                parseInt("123");
+                value.toString();
+            		```
+            	- implicitly with type coercion
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## why learn this?
+
+            - it's built into the language
+            	- ex:
+            	```js
+              if (value.length) {}
+            	```
+            - more flexibility, convenience
+            	- dealing with user input
+            - LVL UP
+          </script>
+        </section>
+
+        <!-- end intro -->
+
+        <!-- start converting types -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## converting types
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## types in JavaScript
+
+            - simple types
+            	- numbers, strings, booleans (true and false), null, undefined
+            - everything else is an object
+            	- arrays, functions, regular expressions, objects are objects
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## simple types to numbers
+
+            - strings → try to parse to a number otherwise NaN
+            - booleans
+            	- true → 1
+            	- false → +0
+            - null → +0
+            - undefined → NaN
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## simple types to booleans
+
+            - numbers → true
+            	- unless the value is +0, -0, or NaN
+            - strings → true
+            	- unless the value is the empty string
+            - null → false
+            - undefined → false
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## converting objects
+
+            - objects to numbers or strings
+            	- implicit valueOf() and toString()
+            - objects to booleans → true
+          </script>
+        </section>
+
+        <!-- end converting types -->
+
+        <!-- start conditional statements -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## conditional statements
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## truthy and falsy values
+
+            - truthy
+            	- 123, "smalltalk", true, objects
+            - falsy
+            	- 0, NaN, "", false, null, undefined
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## if, for, while, do-while
+
+            - expect to evaluate boolean conditions
+            - if the expression does not return a boolean, operands are implicitly converted to booleans
+            - ex:
+            ```js
+            var value = document.getElementById("smalltalk");
+            if (value) {}
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## if vs. switch
+
+            - when evaluating case statements, no type coercion is performed
+            - ex:
+            ```js
+            var value = document.getElementById("smalltalk");
+            switch (value) {
+            	case true:
+            	  // does not enter
+            	  // will only enter here if var value = true;
+            	  break;
+            	case default:
+            	  // enters here
+            	  break;
+            }
+            ```
+          </script>
+        </section>
+
+        <!-- end conditional statements -->
+
+        <!-- start logical operators -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## logical operators
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## && ||
+
+            - operands are implicitly converted to booleans
+            - operand itself is returned, not the boolean value
+            - ex:
+            ```js
+            var value = 0 || "apple";
+            // 0 → false
+            // “apple” → true
+            // value is set to "apple"
+						```
+          </script>
+        </section>
+
+        <!-- end logical operators -->
+
+        <!-- start mathematical operators -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## mathematical operators
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## + - / * %
+
+            - operands are implicitly converted to numbers (except for dates)
+            - ex:
+            ```js
+            var value = true + null + 5;
+            // true → 1
+            // null → 0
+            // value is set to 6
+						```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+						## overloaded +
+
+						- addition between two numbers
+						- string concatenation
+						  - when one operand is a string and the other isn't, the other is converted to a string
+						- ex:
+						```js
+						var value = "smalltalk is " + 2;
+						// value is set to "smalltalk is 2"
+						var value = 1 + 2 + " smalltalk";
+						// value is set to "3 smalltalk"
+						```
+          </script>
+        </section>
+
+        <!-- end mathematical operators -->
+
+        <!-- start relational operators -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## relational operators
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## > < ≥ ≤
+
+            - operands are implicitly converted to numbers (even dates)
+            	- except for strings which are compared via lexicographical string comparison
+            - any comparison involving NaN evaluates to false
+            - ex:
+            ```js
+            var value = false < "123";
+            // false → 0
+            // "123" → 123
+            // value is set to true
+						```
+          </script>
+        </section>
+
+        <!-- end relational operators -->
+
+        <!-- start equality operators -->
+
+        <section data-markdown>
+          <script type="text/template">
+            ## equality operators
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## equality
+
+            - values are considered equal if they are:
+            	- identical boolean values
+            	- identical strings
+            	- numerically equivalent numbers
+            		- +0 equals -0
+            	- the same object
+            - NaN is not equal to anything, including itself
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## == !==
+
+            - compares for equality after doing any necessary type coercions if the types are different
+            - uses the abstract equality comparison algorithm, a series of 22 steps
+            - a surprise:
+            ```js
+            var value = null >= 0;
+            // value is set to true
+            var value = null == 0;
+            // value is set to false
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## == !== algorithm (#14-22)
+
+            - null equals undefined
+            - if one operand is a string and the other operand is a number, implicitly convert the string to a number
+            - if one of the operands is a boolean, implicitly convert the boolean to a number
+            - if one the operands is a string or a number and the other operand is an object, implicitly convert the object to a primitive
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## === !===
+
+            - compares for equality but no type coercion is done
+            - uses the strict equality comparison algorithm
+            - more faith in the result, much safer
+          </script>
+        </section>
+
+        <!-- end equality operators -->
+
+        <!-- start conclusion -->
+        <section data-markdown>
+          <script type="text/template">
+            ## some tips
+
+            - favor === over ==
+            - perform explicit type conversion
+            - use the JavaScript console and the ECMAScript Language Specification as resources
+            - http://dorey.github.io/JavaScript-Equality-Table/
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## thank you
+          </script>
+        </section>
+
+				<!-- end conclusion -->
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>
